@@ -2,7 +2,7 @@
 //  CategoryViewController.swift
 //  Todoey
 //
-//  Created by Ray Berry on 02/03/2018.
+//  Created by James and Ray Berry on 02/03/2018.
 //  Copyright © 2018 JARBerry. All rights reserved.
 //
 
@@ -20,8 +20,8 @@ class CategoryViewController: SwipeTableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       loadCategories()
+        
+        loadCategories()
         
         tableView.separatorStyle = .none
         
@@ -32,22 +32,22 @@ class CategoryViewController: SwipeTableViewController{
         return categoryArray?.count ?? 1
     }
     
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let category = categoryArray? [indexPath.row] {
-        
-        cell.textLabel?.text = category.name
+            
+            cell.textLabel?.text = category.name
             
             guard let categoryColour = UIColor(hexString: category.colour) else {fatalError()}
-    
-        cell.backgroundColor = categoryColour
-        
-        cell.textLabel?.textColor = ContrastColorOf(categoryColour, returnFlat: true)
-    
+            
+            cell.backgroundColor = categoryColour
+            
+            cell.textLabel?.textColor = ContrastColorOf(categoryColour, returnFlat: true)
+            
         }
         
         return cell
@@ -55,6 +55,8 @@ class CategoryViewController: SwipeTableViewController{
     
     //MARK: - TableView Delegate Methods
     
+    
+    // prepare and perform segue for goToItems
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToItems", sender: self)
     }
@@ -69,13 +71,15 @@ class CategoryViewController: SwipeTableViewController{
     
     //MARK: - Data Manipulation Methods
     
+    
+    // this function is for the save button it writes and adds what you want but if there is something wrong it will print an error message
     func save(category: Category) {
         
         
         do {
             try realm.write {
                 realm.add(category)
-                }
+            }
         } catch {
             print("Error saving category \(error)")
         }
@@ -83,16 +87,18 @@ class CategoryViewController: SwipeTableViewController{
         self.tableView.reloadData()
     }
     
+    // this function loads up the categories
     func loadCategories() {
         
         categoryArray = realm.objects(Category.self)
         
-    
+        
         tableView.reloadData()
     }
     
     //MARK: Delete Data From Swipe
-
+    
+    // this updates the model when you delete something
     override func updateModel(at indexPath: IndexPath) {
         
         if let categoryForDeletion = self.categoryArray?[indexPath.row] {
@@ -103,14 +109,16 @@ class CategoryViewController: SwipeTableViewController{
             } catch {
                 print("Error deleting category, \(error)")
             }
-
+            
         }
         
     }
-
+    
     
     //MARK: Add New Categories
-
+    
+    
+    // this IBAction is for when the add button button is pressed and what this does is it adds a new category to the table view
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
@@ -137,14 +145,8 @@ class CategoryViewController: SwipeTableViewController{
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
-}
-        
-
+    }
     
-    
-    
-    
-
 }
 
 

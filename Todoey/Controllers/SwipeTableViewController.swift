@@ -2,7 +2,7 @@
 //  SwipeTableViewController.swift
 //  Todoey
 //
-//  Created by Ray Berry on 21/03/2018.
+//  Created by James and Ray Berry on 21/03/2018.
 //  Copyright © 2018 JARBerry. All rights reserved.
 //
 
@@ -11,10 +11,10 @@ import SwipeCellKit
 
 
 class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegate {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        // set row height
         tableView.rowHeight = 80.0
     }
     
@@ -34,9 +34,9 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
             // handle action by updating model with deletion
             
-           self.updateModel(at: indexPath)
+            self.updateModel(at: indexPath)
             
-
+            
             
         }
         
